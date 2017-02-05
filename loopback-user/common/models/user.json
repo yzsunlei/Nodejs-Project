@@ -14,6 +14,13 @@
   },
   "validations": [],
   "relations": {},
-  "acls": [],
+  "acls": [
+    {
+      "principalId": "$everyone",
+      "permission": "ALLOW",
+      "property": "sayHi",
+      "pricipalType": "ROLE"
+    }
+  ],
   "methods": {}
 }
