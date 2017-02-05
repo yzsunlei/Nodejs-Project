@@ -1,12 +1,23 @@
 var express = require('express');
 var app = express();
 var request = require('request');
+var cheerio = require('cheerio');
 
 app.get('/', function (req, res) {
-    request('http://www.jikexueyuan.com', function (error, response, body) {
+    request('http://www.jikexueyuan.com/course/', function (error, response, body) {
         if (!error && response.statusCode == 200) {
-            console.log(body)
-            res.send("Hello")
+            $ = cheerio.load(body);
+            var cateWrapper = $('.aside-cList li');
+            var classCate = [];
+
+            for (var i = 0; i < cateWrapper.length; i++) {
+                classCate.push(cateWrapper.eq(i).children().first().children().first().text());
+            }
+
+            res.json({
+                "classNum": cateWrapper.length,
+                "classCate": classCate
+            })
         }
     })
 });
